@@ -230,7 +230,10 @@ PRI Do_Mode | ackbit     ' Read EEPROM to determine/select operating mode
       u.LEDYellow
       pst.CharIn                   ' Wait until the user presses a key before getting started
       pst.Str(@InitHeader)         ' Display header
-    
+      pst.Str(@MsgSpacer)
+      pst.Str(@VersionInfo)          ' Display version information
+      pst.Str(@MsgSpacer)
+      Display_Menu_Text            ' Display main menu text
 
 CON {{ MENU METHODS }}
 
@@ -2780,23 +2783,21 @@ PRI Wait_For_Space(errMsg) | ch ' Wait for spacebar to continue, ignore Enter ke
                
 DAT  
 InitHeader    byte CR, LF, LF
-              byte "                                    UU  LLL", CR, LF                                     
-              byte " JJJ  TTTTTTT AAAAA  GGGGGGGGGGG   UUUU LLL   AAAAA TTTTTTTT OOOOOOO  RRRRRRRRR", CR, LF 
-              byte " JJJJ TTTTTTT AAAAAA GGGGGGG       UUUU LLL  AAAAAA TTTTTTTT OOOOOOO  RRRRRRRR", CR, LF  
-              byte " JJJJ  TTTT  AAAAAAA GGG      UUU  UUUU LLL  AAA AAA   TTT  OOOO OOO  RRR RRR", CR, LF   
-              byte " JJJJ  TTTT  AAA AAA GGG  GGG UUUU UUUU LLL AAA  AAA   TTT  OOO  OOO  RRRRRRR", CR, LF   
-              byte " JJJJ  TTTT  AAA  AA GGGGGGGGG UUUUUUUU LLLLLLLL AAAA  TTT OOOOOOOOO  RRR RRR", CR, LF   
-              byte "  JJJ  TTTT AAA   AA GGGGGGGGG UUUUUUUU LLLLLLLLL AAA  TTT OOOOOOOOO  RRR RRR", CR, LF   
-              byte "  JJJ  TT                  GGG             AAA                         RR RRR", CR, LF   
-              byte " JJJ                        GG             AA                              RRR", CR, LF   
-              byte "JJJ                          G             A                                 RR", CR, LF, LF, LF 
-              byte "           Welcome to JTAGulator. Press 'H' for available commands.", CR, LF
-              byte "         Warning: Use of this tool may affect target system behavior!", 0
-
-VersionInfo   byte CR, LF, "JTAGulator FW 1.12", CR, LF
+              byte "                                        °                             ", CR, LF       
+              byte "        BBBBBB  UUU  UUU SSSSSS  FFFFFF INN  NN DDDDDD  EEEEEE RRRRRR ", CR, LF 
+              byte "        BB   BB UUU  UUU SS      FF     I NN NN DD   DD EE     RR   RR", CR, LF 
+              byte "        BBBBBB  UUU  UUU  SSSS   FFFF   I  NNNN DD   DD EEEE   RRRRRR ", CR, LF 
+              byte "        BB   BB UUU  UUU     SS  FF     I   NNN DD   DD EE     RR  RR ", CR, LF 
+              byte "        BBBBBB   UUUUUU  SSSSSS  FF     I    NN DDDDDD  EEEEEE RR   RR", CR, LF, LF, LF 
+              byte "           Welcome to BusFinder. Press 'H' for available commands.", CR, LF
+              byte "         Warning: Use of this tool may affect target system behavior!", CR, LF
+              byte CR, LF
+              byte 0
+VersionInfo   byte CR, LF, "BusFinder FW 1.13", CR, LF
               byte "Designed by Joe Grand, Grand Idea Studio, Inc.", CR, LF
+              byte "Modified by Martin Boller", CR, LF
               byte "Main: jtagulator.com", CR, LF
-              byte "Source: github.com/grandideastudio/jtagulator", 0
+              byte "Source: github.com/martinboller/jtagulator", 0
 
 MenuMain      byte CR, LF, "Target Interfaces:", CR, LF
               byte "J   JTAG", CR, LF
