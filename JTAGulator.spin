@@ -241,16 +241,16 @@ PRI Do_Main_Menu(cmd)
   case cmd
     "J", "j":                 ' Switch to JTAG submenu
       idMenu := MENU_JTAG
-
+      pst.Str(@MenuJTAG)
     "U", "u":                 ' Switch to UART submenu
       idMenu := MENU_UART
-
+      pst.Str(@MenuUART)
     "G", "g":                 ' Switch to GPIO submenu
       idMenu := MENU_GPIO
-
+      pst.Str(@MenuGPIO)
     "S", "s":                 ' Switch to SWD submenu
       idMenu := MENU_SWD
-
+      pst.Str(@MenuSWD)
     "A", "a":                 ' Scan all supported protocols
       if (vTargetIO == -1)
         pst.Str(@ErrTargetIOVoltage)
@@ -277,7 +277,7 @@ PRI Do_Main_Menu(cmd)
     "I", "i":                 ' Display JTAGulator version information
       pst.Str(@VersionInfo) 
 
-    "H", "h":                 ' Display list of available commands
+    "H", "h", "?":            ' Display list of available commands
       Display_Menu_Text
 
     other:
@@ -421,12 +421,12 @@ PRI Do_Shared_Menu(cmd)
     "V", "v":                 ' Set target I/O voltage
       Set_Target_IO_Voltage
           
-    "H", "h":                 ' Display list of available commands
+    "H", "h", "?":                 ' Display list of available commands
       Display_Menu_Text
 
     "M", "m":                 ' Return to main menu
       idMenu := MENU_MAIN
-      
+      pst.Str(@MenuMain)
     other:
       Display_Invalid_Command
          
@@ -477,7 +477,7 @@ PRI Display_Command_Prompt
   
 
 PRI Display_Invalid_Command
-  pst.Str(String(CR, LF, "? Press 'H' for available commands."))
+  pst.Str(String(CR, LF, "? Press 'H/h or ?' for available commands."))
 
   
 CON {{ JTAG METHODS }}
@@ -2789,13 +2789,13 @@ InitHeader    byte CR, LF, LF
               byte "        BBBBBB  UUU  UUU  SSSS   FFFF   I  NNNN DD   DD EEEE   RRRRRR ", CR, LF 
               byte "        BB   BB UUU  UUU     SS  FF     I   NNN DD   DD EE     RR  RR ", CR, LF 
               byte "        BBBBBB   UUUUUU  SSSSSS  FF     I    NN DDDDDD  EEEEEE RR   RR", CR, LF, LF, LF 
-              byte "           Welcome to BusFinder. Press 'H' for available commands.", CR, LF
+              byte "        Welcome to BusFinder. Press 'H/h or ?' for available commands.", CR, LF
               byte "         Warning: Use of this tool may affect target system behavior!", CR, LF
               byte CR, LF
               byte 0
 VersionInfo   byte CR, LF, "BusFinder FW 1.13", CR, LF
-              byte "Designed by Joe Grand, Grand Idea Studio, Inc.", CR, LF
-              byte "Modified by Martin Boller", CR, LF
+              byte "Designed by Joe Grand, Grand Idea Studio, Inc. - v. 1.12", CR, LF
+              byte "Modified by Martin Boller - v. 1.13", CR, LF
               byte "Main: jtagulator.com", CR, LF
               byte "Source: github.com/martinboller/jtagulator", 0
 
